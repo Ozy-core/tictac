@@ -35,6 +35,7 @@ void display_board()
 void player_input(vector<string> board)
 {
     board = tictac_board;
+    
     cout<< "Player 1, choose a number from 1-9 to place your X" << endl;
     int place;
     cin >> place;
@@ -44,7 +45,6 @@ void player_input(vector<string> board)
     }
     //now try to change the board to where it places the X
     //figure out how to change the string in the vector
-    
 }
 
 bool bounds(int pl)
