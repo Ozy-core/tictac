@@ -1,4 +1,5 @@
 #include "tictac.hpp"
+#include <limits>
 
 vector<string> tictac_board{
         " 1 | 2 | 3 ",
@@ -8,15 +9,16 @@ vector<string> tictac_board{
         " 7 | 8 | 9 "
 };
 
-//starting the game only if the user wants to play
-string start(string yn)
+bool playing(string yn)
 {
-    if(yn=="y"||yn=="Y"||yn=="yes"||yn=="Yes")
+    if(yn == "y" || yn == "Y"|| yn == "yes" || yn == "Yes")
     {
-        display_board();
-        player_input(tictac_board);
+        return true;
     }
-    return "Thank you for playing!";
+    else
+    {
+        return false;
+    }
 }
 
 void display_board()
@@ -32,33 +34,101 @@ void display_board()
 //theres 2 players, player 1 is X always
 //reject anything that already has an X or O in it
 //make sure it doesnt go out of bounds, if it does, reject it
-void player_input(vector<string> board)
+void player_input()
 {
-    board = tictac_board;
-    
-    cout<< "Player 1, choose a number from 1-9 to place your X" << endl;
     int place;
-    cin >> place;
-    while(!bounds(place))
+    cout<<"Player 1, choose a place to put your X (1-9): ";
+    cin>>place;
+
+    while(cin.fail())
     {
-        cin >> place;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
+        cout << "Invalid input. Please enter a number between 1 and 9." << endl;
+        cin>>place;
     }
-    //now try to change the board to where it places the X
-    //figure out how to change the string in the vector
+
+    //figure out how to reject invalid inputs
+    update_board(place, "X");
+    display_board();
+    if(winner())
+    {
+        cout<<"We have a winner! Good job player 1"<<endl;
+        exit(0);
+    }
+    cout<<"Player 2, choose a place to put your O (1-9): ";
+    cin>>place;
+
+    while(cin.fail())
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
+        cout << "Invalid input. Please enter a number between 1 and 9." << endl;
+        cin>>place;
+    }
+    update_board(place, "O");
+    display_board();
+    if(winner())
+    {
+        cout<<"We have a winner! Good job player 2"<<endl;
+        exit(0);
+    }
 }
 
-bool bounds(int pl)
+void update_board(int place, string mark)
 {
-    if(pl<1||pl>9)
+    //figure out how to change the string in the vector
+    switch(place)
     {
-        cout<< "Out of bounds. Please enter a number from 1-9" << endl;
-        return false;
+        case 1:
+            tictac_board[0].replace(1,1,mark);
+            break;
+        case 2:
+            tictac_board[0].replace(5,1,mark);
+            break;
+        case 3:
+            tictac_board[0].replace(9,1,mark);
+            break;
+        case 4:
+            tictac_board[2].replace(1,1,mark);
+            break;
+        case 5:
+            tictac_board[2].replace(5,1,mark);
+            break;
+        case 6:
+            tictac_board[2].replace(9,1,mark);
+            break;
+        case 7:
+            tictac_board[4].replace(1,1,mark);
+            break;
+        case 8:
+            tictac_board[4].replace(5,1,mark);
+            break;
+        case 9:
+            tictac_board[4].replace(9,1,mark);
+            break;
+        default:
+            cout<<"Invalid input. Please try again."<<endl;
     }
-    return true;
 }
+
+
+
 
 //checking the who is the winner by going through if the 3 rows have equal strings in it
-bool winner(vector<string> board)
+bool winner()
 {
+    if(tictac_board[0][1]==tictac_board[0][5] && tictac_board[0][5]==tictac_board[0][9])
+    {
+        return true;
+    }
+    if(tictac_board[2][1]==tictac_board[2][5] && tictac_board[2][5]==tictac_board[2][9])
+    {
+        return true;
+    }
+    if(tictac_board[4][1]==tictac_board[4][5] && tictac_board[4][5]==tictac_board[4][9])
+    {
+        return true;
+    }
     return false;
 }

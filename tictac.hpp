@@ -2,12 +2,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-string start(string yn);
+extern vector<string> tictac_board;
 void display_board();
-void player_input(vector<string> board);
-bool bounds(int pl);
-void board_changes(vector<string>& board, int place, string symbol);
+bool playing(string yn);
+void player_input();
+void update_board(int place, string mark);
+bool winner();
 bool winner(vector<string> board);
