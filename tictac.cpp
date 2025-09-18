@@ -34,10 +34,10 @@ void display_board()
 //theres 2 players, player 1 is X always
 //reject anything that already has an X or O in it
 //make sure it doesnt go out of bounds, if it does, reject it
-void player_input()
+void player_input(int player)
 {
     int place;
-    cout<<"Player 1, choose a place to put your X (1-9): ";
+    cout<<"Player " << player <<" choose a place to put your X (1-9): ";
     cin>>place;
 
     while(cin.fail())
@@ -48,30 +48,21 @@ void player_input()
         cin>>place;
     }
 
-    //figure out how to reject invalid inputs
-    update_board(place, "X");
-    display_board();
-    if(winner())
+    while(place < 1 || place > 9)
     {
-        cout<<"We have a winner! Good job player 1"<<endl;
-        exit(0);
-    }
-    cout<<"Player 2, choose a place to put your O (1-9): ";
-    cin>>place;
-
-    while(cin.fail())
-    {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
-        cout << "Invalid input. Please enter a number between 1 and 9." << endl;
+        cout<<"Invalid input. Please enter a number between 1 and 9."<<endl;
         cin>>place;
     }
-    update_board(place, "O");
-    display_board();
-    if(winner())
+
+    if(player==1)
     {
-        cout<<"We have a winner! Good job player 2"<<endl;
-        exit(0);
+        update_board(place, "X");
+        display_board();
+    }
+    else
+    {
+        update_board(place, "O");
+        display_board();
     }
 }
 
@@ -81,30 +72,75 @@ void update_board(int place, string mark)
     switch(place)
     {
         case 1:
+            while (tictac_board[0][1]=='X' || tictac_board[0][1]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[0].replace(1,1,mark);
             break;
         case 2:
+            while (tictac_board[0][5]=='X' || tictac_board[0][5]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[0].replace(5,1,mark);
             break;
         case 3:
+            while (tictac_board[0][9]=='X' || tictac_board[0][9]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[0].replace(9,1,mark);
             break;
         case 4:
+            while (tictac_board[2][1]=='X' || tictac_board[2][1]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[2].replace(1,1,mark);
             break;
         case 5:
+            while (tictac_board[2][5]=='X' || tictac_board[2][5]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[2].replace(5,1,mark);
             break;
         case 6:
+            while (tictac_board[2][9]=='X' || tictac_board[2][9]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[2].replace(9,1,mark);
             break;
         case 7:
+            while (tictac_board[4][1]=='X' || tictac_board[4][1]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[4].replace(1,1,mark);
             break;
         case 8:
+            while (tictac_board[4][5]=='X' || tictac_board[4][5]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[4].replace(5,1,mark);
             break;
         case 9:
+            while (tictac_board[4][9]=='X' || tictac_board[4][9]=='O')
+            {
+                cout<<"That spot is already taken. Please choose another spot."<<endl;
+                return;
+            }
             tictac_board[4].replace(9,1,mark);
             break;
         default:
@@ -116,18 +152,21 @@ void update_board(int place, string mark)
 
 
 //checking the who is the winner by going through if the 3 rows have equal strings in it
-bool winner()
+bool winner(int player)
 {
     if(tictac_board[0][1]==tictac_board[0][5] && tictac_board[0][5]==tictac_board[0][9])
     {
+        cout<< "Player " << player << " wins!" << endl;
         return true;
     }
     if(tictac_board[2][1]==tictac_board[2][5] && tictac_board[2][5]==tictac_board[2][9])
     {
+        cout<< "Player " << player << " wins!" << endl;
         return true;
     }
     if(tictac_board[4][1]==tictac_board[4][5] && tictac_board[4][5]==tictac_board[4][9])
     {
+        cout<< "Player " << player << " wins!" << endl;
         return true;
     }
     return false;

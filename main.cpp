@@ -15,7 +15,23 @@ int main()
         while(playing(yn))
         {
             //game loops 
-            player_input();
+            player_input(1);
+            if(winner(1))
+            {
+                cout<<"We have a winner! Good job player 1"<<endl;
+                exit(0);
+            }
+            player_input(2);
+            if(winner(2))
+            {
+                cout<<"We have a winner! Good job player 2"<<endl;
+                exit(0);    
+            }
         }
+     }
+    else if (playing(yn)==false)
+    {
+        cout<< "See you next time!" << endl;
+        exit(0);
     }
 }
