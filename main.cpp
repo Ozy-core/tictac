@@ -21,6 +21,14 @@ int main()
                 cout<<"We have a winner! Good job player 1"<<endl;
                 break;
             }
+            if(winner(1)==false && winner(2)==false && 
+               tictac_board[0][1]!='1' && tictac_board[0][5]!='2' && tictac_board[0][9]!='3' &&
+               tictac_board[2][1]!='4' && tictac_board[2][5]!='5' && tictac_board[2][9]!='6' &&
+               tictac_board[4][1]!='7' && tictac_board[4][5]!='8' && tictac_board[4][9]!='9')
+            {
+                cout<<"It's a tie!"<<endl;
+                break;
+            }
             player_input(2);
             if(winner(2))
             {
