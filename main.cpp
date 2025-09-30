@@ -27,11 +27,28 @@ int main()
                 cout<<"We have a winner! Good job player 2"<<endl;
                 break;    
             }
+            if(winner(1)==false && winner(2)==false && 
+               tictac_board[0][1]!='1' && tictac_board[0][5]!='2' && tictac_board[0][9]!='3' &&
+               tictac_board[2][1]!='4' && tictac_board[2][5]!='5' && tictac_board[2][9]!='6' &&
+               tictac_board[4][1]!='7' && tictac_board[4][5]!='8' && tictac_board[4][9]!='9')
+            {
+                cout<<"It's a tie!"<<endl;
+                break;
+            }
         }
-        if(winner(1)==false && winner(2)==false)
+        cout<< "Do you want to play again? (y/n)" << endl;
+        cin >> yn;
+        if(playing(yn))
         {
-            cout<<"It's a tie! Good game players!"<<endl;
-        }
+            tictac_board = {
+                " 1 | 2 | 3 ",
+                " -----------",
+                " 4 | 5 | 6 ",
+                " -----------",
+                " 7 | 8 | 9 "
+            };
+            main();  
+        }  
      }
     else if (playing(yn)==false)
     {
