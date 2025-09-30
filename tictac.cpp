@@ -64,6 +64,7 @@ void player_input(int player)
         update_board(place, "O");
         display_board();
     }
+    
 }
 
 void update_board(int place, string mark)
@@ -71,10 +72,13 @@ void update_board(int place, string mark)
     //figure out how to change the string in the vector
     switch(place)
     {
+        int pl;
         case 1:
             while (tictac_board[0][1]=='X' || tictac_board[0][1]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[0].replace(1,1,mark);
@@ -83,6 +87,8 @@ void update_board(int place, string mark)
             while (tictac_board[0][5]=='X' || tictac_board[0][5]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[0].replace(5,1,mark);
@@ -91,6 +97,8 @@ void update_board(int place, string mark)
             while (tictac_board[0][9]=='X' || tictac_board[0][9]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[0].replace(9,1,mark);
@@ -99,6 +107,8 @@ void update_board(int place, string mark)
             while (tictac_board[2][1]=='X' || tictac_board[2][1]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[2].replace(1,1,mark);
@@ -107,6 +117,8 @@ void update_board(int place, string mark)
             while (tictac_board[2][5]=='X' || tictac_board[2][5]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[2].replace(5,1,mark);
@@ -115,6 +127,8 @@ void update_board(int place, string mark)
             while (tictac_board[2][9]=='X' || tictac_board[2][9]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[2].replace(9,1,mark);
@@ -123,6 +137,8 @@ void update_board(int place, string mark)
             while (tictac_board[4][1]=='X' || tictac_board[4][1]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[4].replace(1,1,mark);
@@ -131,6 +147,8 @@ void update_board(int place, string mark)
             while (tictac_board[4][5]=='X' || tictac_board[4][5]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[4].replace(5,1,mark);
@@ -139,6 +157,8 @@ void update_board(int place, string mark)
             while (tictac_board[4][9]=='X' || tictac_board[4][9]=='O')
             {
                 cout<<"That spot is already taken. Please choose another spot."<<endl;
+                cin>>pl;
+                update_board(pl, mark);
                 return;
             }
             tictac_board[4].replace(9,1,mark);
