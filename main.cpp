@@ -19,13 +19,13 @@ int main()
             if(winner(1))
             {
                 cout<<"We have a winner! Good job player 1"<<endl;
-                exit(0);
+                break;
             }
             player_input(2);
             if(winner(2))
             {
                 cout<<"We have a winner! Good job player 2"<<endl;
-                exit(0);    
+                break;    
             }
         }
      }
