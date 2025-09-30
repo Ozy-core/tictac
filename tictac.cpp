@@ -189,5 +189,30 @@ bool winner(int player)
         cout<< "Player " << player << " wins!" << endl;
         return true;
     }
+    if(tictac_board[0][1]==tictac_board[2][1] && tictac_board[2][1]==tictac_board[4][1])
+    {
+        cout<< "Player " << player << " wins!" << endl;
+        return true;
+    }
+    if(tictac_board[0][5]==tictac_board[2][5] && tictac_board[2][5]==tictac_board[4][5])
+    {
+        cout<< "Player " << player << " wins!" << endl;
+        return true;
+    }
+    if(tictac_board[0][9]==tictac_board[2][9] && tictac_board[2][9]==tictac_board[4][9])    
+    {
+        cout<< "Player " << player << " wins!" << endl;
+        return true;
+    }
+    if(tictac_board[0][1]==tictac_board[2][5] && tictac_board[2][5]==tictac_board[4][9])
+    {
+        cout<< "Player " << player << " wins!" << endl;
+        return true;
+    }
+    if(tictac_board[0][9]==tictac_board[2][5] && tictac_board[2][5]==tictac_board[4][1])
+    {
+        cout<< "Player " << player << " wins!" << endl;
+        return true;
+    }   
     return false;
 }
