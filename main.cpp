@@ -28,6 +28,10 @@ int main()
                 break;    
             }
         }
+        if(winner(1)==false && winner(2)==false)
+        {
+            cout<<"It's a tie! Good game players!"<<endl;
+        }
      }
     else if (playing(yn)==false)
     {
