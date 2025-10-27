@@ -49,7 +49,7 @@ bool is_valid_mark(char c) {
 
 bool is_valid_archetype(string a) {
     transform(a.begin(), a.end(), a.begin(), ::tolower);
-    return (a == "paladin" || a == "alchemist" || a == "chronomage");
+    return (a == "paladin" || a == "alchemist");
 }
 
 void setup_players(Player &p1, Player &p2) {
@@ -61,7 +61,7 @@ void setup_players(Player &p1, Player &p2) {
         cout << "Invalid mark. Try again: ";
         cin >> p1.mark;
     }
-    cout << "Choose archetype (Paladin / Alchemist / Chronomage): ";
+    cout << "Choose archetype (Paladin / Alchemist): ";
     cin >> p1.archetype;
     while (!is_valid_archetype(p1.archetype)) {
         cout << "Invalid choice. Try again: ";
@@ -76,7 +76,7 @@ void setup_players(Player &p1, Player &p2) {
         cout << "Invalid mark. Try again: ";
         cin >> p2.mark;
     }
-    cout << "Choose archetype (Paladin / Alchemist / Chronomage): ";
+    cout << "Choose archetype (Paladin / Alchemist): ";
     cin >> p2.archetype;
     while (!is_valid_archetype(p2.archetype)) {
         cout << "Invalid choice. Try again: ";
