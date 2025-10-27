@@ -2,7 +2,8 @@
 
 int main() {
     cout << "Welcome players! Want to play a game of Tic Tac Toe? (y/n): ";
-    string yn; cin >> yn;
+    string yn; 
+    cin >> yn;
 
     if (!playing(yn)) {
         cout << "See you next time!\n";
@@ -10,7 +11,8 @@ int main() {
     }
 
     cout << "Select mode:\n1. Regular Tic Tac Toe\n2. Battle Tic Tac Toe\nChoice: ";
-    int mode; cin >> mode;
+    int mode; 
+    cin >> mode;
 
     if (mode == 1) {
        
