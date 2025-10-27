@@ -15,8 +15,9 @@ bool playing(string yn)
 
 void display_board()
 {
-    for (const auto& row : tictac_board)
+    for (const auto& row : tictac_board){
         cout << row << endl;
+    }
 }
 
 void player_input(int player)
