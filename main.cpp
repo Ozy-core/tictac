@@ -1,76 +1,63 @@
 #include "tictac.hpp"
 
-int main()
-{
-    cout << "Welcome players! Want to play a game of Tic Tac Toe? (y/n)" << endl;
-    string yn;
-    cin >> yn;
+int main() {
+    cout << "Welcome players! Want to play a game of Tic Tac Toe? (y/n): ";
+    string yn; cin >> yn;
 
     if (!playing(yn)) {
-        cout << "See you next time!" << endl;
+        cout << "See you next time!\n";
         return 0;
     }
-    cout << "Select game type:\n";
-    cout << "1. Regular Tic Tac Toe\n";
-    cout << "2. Battle Tic Tac Toe\n";
-    int mode;
-    cin >> mode;
+
+    cout << "Select mode:\n1. Regular Tic Tac Toe\n2. Battle Tic Tac Toe\nChoice: ";
+    int mode; cin >> mode;
 
     if (mode == 1) {
+       
         display_board();
         while (true) {
             player_input(1);
-            if (winner(1)) {
-                cout << "We have a winner! Good job player 1\n";
-                break;
-            }
-            if (winner(1) == false && winner(2) == false && board_full()) {
-                cout << "It's a tie!\n";
-                break;
-            }
+            if (winner(1)) { cout << "Player 1 wins!\n"; break; }
 
             player_input(2);
-            if (winner(2)) {
-                cout << "We have a winner! Good job player 2\n";
-                break;
-            }
-            if (winner(1) == false && winner(2) == false && board_full()) {
-                cout << "It's a tie!\n";
-                break;
-            }
+            if (winner(2)) { cout << "Player 2 wins!\n"; break; }
         }
-    }
+    } 
     else if (mode == 2) {
-
+        
         Player p1, p2;
-        setup_players(p1, p2);
+        cout << "Player 1, choose your mark: "; cin >> p1.mark;
+        while (p1.mark.size() != 1) { cout << "One character only: "; cin >> p1.mark; }
+        cout << "Player 1, choose archetype (Paladin/Alchemist): "; cin >> p1.archetype;
+
+        cout << "Player 2, choose your mark: "; cin >> p2.mark;
+        while (p2.mark.size() != 1) { cout << "One character only: "; cin >> p2.mark; }
+        cout << "Player 2, choose archetype (Paladin/Alchemist): "; cin >> p2.archetype;
+
+        p1.name="Player 1"; p2.name="Player 2";
         display_board();
-        int turn = 1;
 
         while (true) {
-            Player &current = (turn % 2 == 1) ? p1 : p2;
-            player_battle_turn(current);
+            player_battle_turn(p1);
+            if (winner(1)) { cout << "Player 1 wins!\n"; break; }
 
-            if (winner_mark(current.mark)) {
-                cout << "Player " << current.name << " wins!\n";
-                break;
-            }
-            if (board_full()) {
-                cout << "It's a tie!\n";
-                break;
-            }
-            turn++;
+            player_battle_turn(p2);
+            if (winner(2)) { cout << "Player 2 wins!\n"; break; }
         }
     }
 
-   
-    cout << "Do you want to play again? (y/n)\n";
+    cout << "Do you want to play again? (y/n): ";
     cin >> yn;
     if (playing(yn)) {
-        reset_board();
-        main(); 
+        tictac_board = {
+            " 1 | 2 | 3 ",
+            " -----------",
+            " 4 | 5 | 6 ",
+            " -----------",
+            " 7 | 8 | 9 "
+        };
+        main(); // restart
     } else {
         cout << "Goodbye!\n";
-        exit(0);
     }
 }
