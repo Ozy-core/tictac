@@ -12,7 +12,7 @@ extern vector<string> tictac_board;
 // Original functions
 void display_board();
 bool playing(string yn);
-void player_input(int player);
+void player_input(int player, string mark);
 bool update_board(int place, string mark);
 bool winner(int player);
 

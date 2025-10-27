@@ -13,40 +13,39 @@ bool playing(string yn)
     return (yn == "y" || yn == "Y" || yn == "yes" || yn == "Yes");
 }
 
-void display_board()
-{
-    for (const auto& row : tictac_board){
+void display_board() {
+    for (const auto& row : tictac_board) {
         cout << row << endl;
     }
 }
 
-void player_input(int player)
+
+void player_input(int player, string mark)
 {
     int place;
 
-    while (true) 
+    while (true)
     {
-        cout << "Player " << player << " choose a place to put your "
-             << (player == 1 ? "X" : "O") << " (1-9): ";
+        cout << "Player " << player << " choose a place to put your " << mark << " (1-9): ";
         cin >> place;
 
-        if(cin.fail())
+        if (cin.fail())
         {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input. Please enter a number between 1 and 9." << endl;
             continue;
         }
 
-        if(place < 1 || place > 9)
+        if (place < 1 || place > 9)
         {
             cout << "Invalid input. Please enter a number between 1 and 9." << endl;
             continue;
         }
 
-        if(update_board(place, player == 1 ? "X" : "O")) 
+        if (update_board(place, mark))
         {
-            display_board(); 
+            display_board();
             break;
         }
         else
@@ -57,12 +56,13 @@ void player_input(int player)
 }
 
 
+
 bool update_board(int place, string mark)
 {
     switch(place)
     {
         case 1:
-            if(tictac_board[0][1]=='X' || tictac_board[0][1]=='O') return false;
+            if(tictac_board[0][1]== 'X' || tictac_board[0][1]=='O') return false;
             tictac_board[0].replace(1,1,mark);
             break;
         case 2:
