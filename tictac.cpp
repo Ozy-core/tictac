@@ -45,7 +45,6 @@ void player_input(int player, string mark)
 
         if (update_board(place, mark))
         {
-            display_board();
             break;
         }
         else

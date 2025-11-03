@@ -95,12 +95,12 @@ int main() {
         display_board();
 
         while (true) {
-            player_battle_turn(p1);
             display_board();
+            player_battle_turn(p1);   
             if (winner(1)) { cout << "Player 1 wins!\n"; break; }
 
-            player_battle_turn(p2);
             display_board();
+            player_battle_turn(p2);
             if (winner(2)) { cout << "Player 2 wins!\n"; break; }
         }
     }
