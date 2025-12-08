@@ -1,8 +1,8 @@
 #include "tictac.hpp"
 
 int main() {
-    cout << "Welcome players! Want to play a game of Tic Tac Toe? (y/n): ";
-    string yn; 
+    cout << "Welcome! Want to play a game of Tic Tac Toe? (y/n): ";
+    string yn;
     cin >> yn;
 
     if (!playing(yn)) {
@@ -10,114 +10,137 @@ int main() {
         return 0;
     }
 
-    cout << "Select mode:\n1. Regular Tic Tac Toe\n2. Battle Tic Tac Toe\nChoice: ";
-    int mode; 
+    cout << "Select mode:\n1. Regular Tic Tac Toe\n2. Campaign Battle Tic Tac Toe\nChoice: ";
+    int mode;
     cin >> mode;
 
     if (mode == 1) {
-       
+        reset_board();
         display_board();
         while (true) {
             player_input(1, "X");
-            if (winner(1)) { cout << "Player 1 wins!\n"; break; }
+            if (winner(1)) 
+            {   
+                display_board();
+                cout << "Player 1 wins!\n";
+                break; }
+            display_board();
 
             player_input(2, "O");
-            if (winner(2)) { cout << "Player 2 wins!\n"; break; }
+            if (winner(2)) 
+            { 
+                display_board();
+                cout << "Player 2 wins!\n"; 
+                break; }
+            display_board();
+
+            bool full=true;
+            for(int i=1;i<=9;i++){
+                auto [r,c]=board_index(i);
+                if(tictac_board[r][c] >= '1' && tictac_board[r][c] <= '9') full=false;
+            }
+            if(full){ cout<<"Draw!\n"; break; }
         }
-    } 
+    }
     else if (mode == 2) {
 
-        cout << "=====================\n";
-        cout << "     Archetype Rules\n";
-        cout << "=====================\n\n";
+        Player player;
+        int step = 0;
 
-        // --- Alchemist Rules ---
-        cout << "Alchemist:\n";
-        cout << "An Alchemist is a potions master with arcane knowledge of transfiguration.\n";
-        cout << "If a player chooses the Alchemist archetype, on their turn they can either:\n";
-        cout << "  - Make a regular Tic-Tac-Toe move, OR\n";
-        cout << "  - Swap two marks on the board.\n\n";
-
-        cout << "Rules:\n";
-        cout << "• On your turn, a formatted menu will appear allowing you to choose\n";
-        cout << "  whether to make a regular move or swap marks.\n";
-        cout << "• You will be prompted for which marks you want to swap.\n";
-        cout << "• Marks do NOT have to be adjacent.\n";
-        cout << "• You can activate this power once per turn and as many times as you want\n";
-        cout << "  throughout the game.\n";
-        cout << "• You CANNOT make a move AND swap marks in the same turn.\n";
-        cout << "• The game will prevent you from swapping two marks of the same type\n";
-        cout << "  (since that would be pointless).\n";
-        cout << "• You cannot make an invalid special move (for example, you cannot swap marks\n";
-        cout << "  during turns one or two, since there are zero or one marks on the board).\n\n";
-
-        // --- Paladin Rules ---
-        cout << "Paladin:\n";
-        cout << "A Paladin is a stalwart guard that can force others around the battlefield.\n";
-        cout << "If a player chooses the Paladin archetype, on their turn they can either:\n";
-        cout << "  - Make a regular Tic-Tac-Toe move, OR\n";
-        cout << "  - Shift one existing mark to an adjacent square.\n\n";
-
-        cout << "Rules:\n";
-        cout << "• You will see a menu allowing you to choose between a regular move or a special move.\n";
-        cout << "  If you choose the special move, you will be asked which mark to shift and where.\n";
-        cout << "• You may shift either your own mark or your opponent’s mark.\n";
-        cout << "• The mark must move to an adjacent square (e.g., from space 1 to 2, 4, or 5).\n";
-        cout << "• You CANNOT move a mark to a non-adjacent square (like 3, 6, 7, 8, or 9 from 1).\n";
-        cout << "• You must shift the mark to an unoccupied square.\n";
-        cout << "• Squares do NOT wrap around the board.\n";
-        cout << "• You can activate this power once per turn and as many times as you want\n";
-        cout << "  throughout the game.\n";
-        cout << "• You CANNOT make a move AND shift a mark in the same turn.\n";
-        cout << "• The game will stop you if you try to make an invalid special move\n";
-        cout << "  (for example, shifting a mark on turn one when the board is empty).\n\n";
-        
-        Player p1, p2;
-        cout << "Player 1, choose your mark: "; cin >> p1.mark;
-        while (p1.mark.size() != 1) { cout << "One character only: "; cin >> p1.mark; }
-        cout << "Player 1, choose archetype (Paladin/Alchemist): "; 
-        cin >> p1.archetype;
-        if(p1.archetype!="Paladin" && p1.archetype!="Alchemist"){
-            cout<<"Invalid archetype. Defaulting to Paladin.\n"; p1.archetype="Paladin";
+        cout << "Load previous campaign? (y/n): ";
+        string loadyn; cin >> loadyn;
+        if(playing(loadyn)) {
+            if(load_game(player, step, "savegame.txt")) {
+                cout << "Resuming saved campaign at step " << step << ".\n";
+            } else {
+                cout << "No save found. Starting new campaign.\n";
+            }
         }
 
-        cout << "Player 2, choose your mark: "; cin >> p2.mark;
-        while (p2.mark.size() != 1) { cout << "One character only: "; cin >> p2.mark; }
-        cout << "Player 2, choose archetype (Paladin/Alchemist): "; 
-        cin >> p2.archetype;
-        if(p2.archetype!="Paladin" && p2.archetype!="Alchemist"){
-            cout<<"Invalid archetype. Defaulting to Alchemist.\n"; p2.archetype="Alchemist";
+        if(player.name.empty()) {
+            cout << "Enter your character name: ";
+            cin >> ws;
+            getline(cin, player.name);
+            if(player.name.empty()) player.name = "Hero";
+
+            cout << "Choose class (Paladin / Alchemist): ";
+            cin >> player.archetype;
+
+            if(player.archetype != "Paladin" && player.archetype != "Alchemist") {
+                player.archetype = "Paladin";
+            }
+            if(player.archetype == "Paladin") {
+                player.health = 60; player.attack = 8; player.defense = 5; player.mark = "X";
+            } else {
+                player.health = 50; player.attack = 9; player.defense = 3; player.mark = "X";
+            }
+            player.gold = 20;
+            step = 0;
         }
 
-        p1.name="Player 1"; 
-        p2.name="Player 2";
+        vector<Player> foes;
+        Player enmu; enmu.name="Enmu"; enmu.mark="E"; enmu.health=20; enmu.attack=4; enmu.defense=1; enmu.gold=5; enmu.abilities={"Berserk"};
+        Player gyutaro; gyutaro.name="Gyutaro"; gyutaro.mark="G"; gyutaro.health=25; gyutaro.attack=6; gyutaro.defense=2; gyutaro.gold=8; gyutaro.abilities={"Regenerate"};
+        Player daki; daki.name="Daki"; daki.mark="D"; daki.health=30; daki.attack=7; daki.defense=3; daki.gold=12; daki.abilities={"SwapMarks"};
+        Player akaza; akaza.name="Akaza"; akaza.mark="A"; akaza.health=40; akaza.attack=9; akaza.defense=4; akaza.gold=20; akaza.abilities={"Shield","Berserk"};
+        Player muzan; muzan.name="Muzan Kibutsuji"; muzan.mark="M"; muzan.health=80; muzan.attack=12; muzan.defense=6; muzan.gold=100; muzan.abilities={"BloodBash","Regenerate","ShadowStep"};
 
-        display_board();
+        foes.push_back(enmu);
+        foes.push_back(gyutaro);
+        foes.push_back(daki);
+        foes.push_back(akaza);
+        foes.push_back(muzan);
 
-        while (true) {
-            display_board();
-            player_battle_turn(p1);   
-            if (winner(1)) { cout << "Player 1 wins!\n"; break; }
+        const int total_battles = (int)foes.size();
 
-            display_board();
-            player_battle_turn(p2);
-            if (winner(2)) { cout << "Player 2 wins!\n"; break; }
+        while(step < total_battles) {
+            cout << "\n===== Campaign Step " << step+1 << " =====\n";
+            cout << "You are: " << player.name << " (HP " << player.health << ", ATK " << player.attack << ", DEF " << player.defense << ", Gold " << player.gold << ")\n";
+
+            play_single_battle(player, foes[step]);
+
+            if(player.health <= 0) {
+                cout << "You have been defeated. Restarting campaign...\n";
+                remove("savegame.txt");
+                main();
+                return 0;
+            } else {
+                int reward = foes[step].gold;
+                cout << "You loot " << reward << " gold.\n";
+                player.gold += reward;
+            }
+
+            step++;
+
+            if(step == 1) random_event(player);
+            if(step == 2) shop_event(player);
+            if(step == 4) choice_event(player);
+
+            cout << "Current stats: HP " << player.health << " | ATK " << player.attack << " | DEF " << player.defense << " | Gold " << player.gold << "\n";
+
+            cout << "Save campaign progress? (y/n): ";
+            string sy; cin >> sy;
+            if(playing(sy)) save_game(player, step, "savegame.txt");
+
+            cout << "Continue? (y/n): ";
+            string cont; cin >> cont;
+            if(!playing(cont)) {
+                cout << "Save before exiting? (y/n): ";
+                string sy2; cin >> sy2;
+                if(playing(sy2)) save_game(player, step, "savegame.txt");
+                return 0;
+            }
         }
+
+        cout << "\nYou have defeated all foes! Congratulations, " << player.name << "!\n";
+        remove("savegame.txt");
     }
 
     cout << "Do you want to play again? (y/n): ";
     cin >> yn;
     if (playing(yn)) {
-        tictac_board = {
-            " 1 | 2 | 3 ",
-            " -----------",
-            " 4 | 5 | 6 ",
-            " -----------",
-            " 7 | 8 | 9 "
-        };
-        main(); // restart
-    } else {
-        cout << "Goodbye!\n";
+        reset_board();
+        main();
     }
 
     return 0;
